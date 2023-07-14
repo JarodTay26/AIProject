@@ -64,8 +64,9 @@ public class PlayerBehavior : MonoBehaviour
             compareSize.Add(randomNumberFour);
         }
 
-        //compareSize.Sort(); // sorts list in ascending order
-        if (compareSize.Min() == randomNumberOne){
+        if (compareSize.Count > 0){
+            //compareSize.Sort(); // sorts list in ascending order
+            if (compareSize.Min() == randomNumberOne){
             // move player1 to front
             // Get the current position of the GameObject
             Vector3 currentPosition = playerOne.transform.position;
@@ -75,8 +76,8 @@ public class PlayerBehavior : MonoBehaviour
 
             // Move the GameObject to the new position
             playerOne.transform.position = newPosition;
-        }
-        if (compareSize.Min() == randomNumberTwo){
+            }  
+            if (compareSize.Min() == randomNumberTwo){
 
             Vector3 currentPosition = playerTwo.transform.position;
             // Calculate the new position by adding the desired distance to the X coordinate
@@ -84,9 +85,9 @@ public class PlayerBehavior : MonoBehaviour
 
             // Move the GameObject to the new position
             playerTwo.transform.position = newPosition;
-        }
+            }
 
-        if (compareSize.Min() == randomNumberThree){
+            if (compareSize.Min() == randomNumberThree){
 
             Vector3 currentPosition = playerThree.transform.position;
             // Calculate the new position by adding the desired distance to the X coordinate
@@ -94,8 +95,8 @@ public class PlayerBehavior : MonoBehaviour
 
             // Move the GameObject to the new position
             playerThree.transform.position = newPosition;
-        }
-        if (compareSize.Min() == randomNumberFour){
+            }
+            if (compareSize.Min() == randomNumberFour){
 
             Vector3 currentPosition = playerFour.transform.position;
             // Calculate the new position by adding the desired distance to the X coordinate
@@ -103,9 +104,11 @@ public class PlayerBehavior : MonoBehaviour
 
             // Move the GameObject to the new position
             playerFour.transform.position = newPosition;
-        }
+            }
 
-        compareSize.Clear(); // clear the list after each round
+            compareSize.Clear(); // clear the list after each round
+        }
+        
         
     }
     
