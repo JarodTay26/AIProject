@@ -12,7 +12,7 @@ public class PlayerBehavior : MonoBehaviour
         public int card_played;
         public List<int> cards_owned;
         public int rank;
-
+        public int score;
 
     }
     public Player[] Players = new Player[4];
@@ -23,9 +23,9 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject playerThree;
     public GameObject playerFour;
 
-    public Text codeTextOne; // for number selection (1-9) and scores
-    public Text codeTextTwo;
-    public Text codeTextThree;
+    public Text cardTextOne; // for number selection (1-9) and scores
+    public Text cardTextTwo;
+    public Text cardTextThree;
     public Text codeTextFour;
 
     public Text scoreTextOne; // for each players score
@@ -34,12 +34,6 @@ public class PlayerBehavior : MonoBehaviour
     public Text scoreTextFour;
 
     public float checkRadius = 0.25f;
-
-    public static int scoreOne;
-    public static int scoreTwo;
-    public static int scoreThree;
-    public static int scoreFour;
-
     
     private Vector3 desiredPos1 = new Vector3(2.455911f, 0.45f, -0.229504f);
     private Vector3 desiredPos2 = new Vector3(0.955911f, 0.45f, -0.229504f);
@@ -84,8 +78,19 @@ public class PlayerBehavior : MonoBehaviour
         scoreTextTwo.text = "0";
         scoreTextThree.text = "0";
         scoreTextFour.text = "0";
+        Array.Clear(Players,0,Players.Length);
     }
-    
+    void InputCardPlayed(){
+        Players[1].card_played = gameObject.GetComponen<AiDecisionScript>().PlayCard(Player[1].card_played,Player[0].card_played,Player[2].card_played,Player[3].card_played);
+        Players[1].cards_owned.Remove(Players[1].card_played);
+        Players[2].card_played = gameObject.GetComponen<AiSmallestToBiggest>().PlayCard();
+        Players[2].cards_owned.Remove(Players[2].card_played);
+        Players[3].card_played = gameObject.GetComponen<AiBiggestToSmallest>().PlayCard();
+        Players[3].cards_owned.Remove(Players[3].card_played);
+    }
+    void RenderCardPlayed(){
+
+    }
     void GameLogic(){
         List<Player> round_cards;
         foreach (Player player in Players)
@@ -142,7 +147,7 @@ public class PlayerBehavior : MonoBehaviour
 
 
             // Convert the random number to a string, UI
-            codeTextOne.text = randomNumberOne.ToString();
+        codeTextOne.text = randomNumberOne.ToString();
         codeTextTwo.text = randomNumberTwo.ToString();
         codeTextThree.text = randomNumberThree.ToString();
         codeTextFour.text = randomNumberFour.ToString();
