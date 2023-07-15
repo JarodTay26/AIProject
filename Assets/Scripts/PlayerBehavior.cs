@@ -71,10 +71,9 @@ public class PlayerBehavior : MonoBehaviour
         //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
         
         // Generate a random integer between 1 and 10 using Random.Range, 10 exclusive 1 inclusive
-        int randomNumberOne = Random.Range(1, 10);
-        int randomNumberTwo = Random.Range(1, 10);
-        int randomNumberThree = Random.Range(1, 10);
-        int randomNumberFour = Random.Range(1, 10);
+        randomNumberTwo = Random.Range(1, 10);
+        randomNumberThree = Random.Range(1, 10);
+        randomNumberFour = Random.Range(1, 10);
 
         // private Vector3 playerOneTempPos; 
         // private Vector3 playerTwoTempPos; 
