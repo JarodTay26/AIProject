@@ -3,9 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public class Player
+    {
+        public int card_played;
+        public List<int> cards_owned;
+        public int rank;
+
+
+    }
+    public Player[] Players = new Player[4];
+
+
     public GameObject playerOne;
     public GameObject playerTwo;
     public GameObject playerThree;
@@ -54,7 +66,13 @@ public class PlayerBehavior : MonoBehaviour
     public int randomPrevNumberFour;
 
     void Start(){
-        
+        //create 4 players
+        for (Player player:Players)
+        {
+            player.cards_owned = { 1,2,3,4,5,6,7,8,9};
+            player.card_played = 0;
+            player.rank = 0;
+        }
         codeTextOne.text = "0";
         codeTextTwo.text = "0";
         codeTextThree.text = "0";
@@ -67,23 +85,43 @@ public class PlayerBehavior : MonoBehaviour
     }
     
     void GameLogic(){
-        //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
-        
-        // if ((randomNumberOne != 0) && (randomNumberTwo != 0) && (randomNumberThree != 0) && (randomNumberFour != 0)){
-        //     // store prev int selected
-        //     randomPrevNumberOne = randomNumberOne;
-        //     randomPrevNumberTwo = randomNumberTwo;
-        //     randomPrevNumberThree = randomNumberThree;
-        //     randomPrevNumberFour = randomNumberFour;
-        //     Debug.Log(randomPrevNumberOne);
-        //     Debug.Log(randomPrevNumberTwo);
-        //     Debug.Log(randomPrevNumberThree);
-        //     Debug.Log(randomPrevNumberFour);
-        // }
+        List<int> round_cards;
+        for (Player player:Players)
+        {
+            int check = 0;
+            for (int i = 0; i < 4; ++i)
+            {
+                if (player  == Players[i])
+                {
+                    continue;
+                }
+                if ( player.card_played == Players[i].card_played)
+                {
+                    check++;
+                }
+            }
+            if (check == 0)
+            {
+
+            }
+        }
+            //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
+
+            // if ((randomNumberOne != 0) && (randomNumberTwo != 0) && (randomNumberThree != 0) && (randomNumberFour != 0)){
+            //     // store prev int selected
+            //     randomPrevNumberOne = randomNumberOne;
+            //     randomPrevNumberTwo = randomNumberTwo;
+            //     randomPrevNumberThree = randomNumberThree;
+            //     randomPrevNumberFour = randomNumberFour;
+            //     Debug.Log(randomPrevNumberOne);
+            //     Debug.Log(randomPrevNumberTwo);
+            //     Debug.Log(randomPrevNumberThree);
+            //     Debug.Log(randomPrevNumberFour);
+            // }
 
 
-        // Convert the random number to a string, UI
-        codeTextOne.text = randomNumberOne.ToString();
+            // Convert the random number to a string, UI
+            codeTextOne.text = randomNumberOne.ToString();
         codeTextTwo.text = randomNumberTwo.ToString();
         codeTextThree.text = randomNumberThree.ToString();
         codeTextFour.text = randomNumberFour.ToString();
