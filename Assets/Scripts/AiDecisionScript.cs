@@ -5,7 +5,7 @@ using System;
 
 public class AiDecisionScript : MonoBehaviour
 {
-    PlayerBehavior gameData;
+    PlayerBehavior gameData = null;
     private const int playerCount = 4;
     private const int maxNumberOfCards = 9;
     private float[] valueTable = new float[maxNumberOfCards];
@@ -15,8 +15,17 @@ public class AiDecisionScript : MonoBehaviour
 
     int GameScore(int p, int p2, int p3, int p4)
     {
-        if(p == p2 || p == p3 || p == p4){
+        if(p == p2){
             return 0;
+        }
+        if(p == p3){
+            return 0;
+        }
+        if(p == p4){
+            return 0;
+        }
+        if(p2 == p3 || p3 == p4 || p2 == p4){
+            return 1;
         }
         if (p > p2)
         {
