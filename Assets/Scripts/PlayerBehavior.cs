@@ -6,8 +6,6 @@ using System.Linq;
 
 
 
-// key 1 moves player nearest to you, 4 furthest
-// R for repeat round
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -21,121 +19,660 @@ public class PlayerBehavior : MonoBehaviour
     public Text codeTextThree;
     public Text codeTextFour;
 
-    //private bool hasStarted = false;
+    public Text scoreTextOne; // for each players score
+    public Text scoreTextTwo;
+    public Text scoreTextThree;
+    public Text scoreTextFour;
 
-    List<int> compareSize = new List<int>(); // Create a new list
+    public float checkRadius = 0.25f;
 
-    // for (int i = 0; i < 4; i++)
-    // {
-    //     numbers.Add(20); // Add 20 to the list
-    // }
+    public static int scoreOne;
+    public static int scoreTwo;
+    public static int scoreThree;
+    public static int scoreFour;
     
-    //public float moveDistance = 0.25f;
-    //public float moveSpeed = 1.0f;
+    private Vector3 desiredPos1 = new Vector3(2.455911f, 0.45f, -0.229504f);
+    private Vector3 desiredPos2 = new Vector3(0.955911f, 0.45f, -0.229504f);
+    private Vector3 desiredPos3 = new Vector3(-0.655911f, 0.45f, -0.229504f);
+    private Vector3 desiredPos4 = new Vector3(-2.155911f, 0.45f, -0.229504f);
 
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-        Debug.Log("Start called");
+    //private Vector3 desiredPos5 = new Vector3(-3.655911f, 0.45f, -0.229504f);
+
+
+    private Vector3 playerOneTempPos; 
+    private Vector3 playerTwoTempPos; 
+    private Vector3 playerThreeTempPos; 
+    private Vector3 playerFourTempPos;
+
+    private bool randomBool = false;
+
+
+    void Start(){
+        //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
+        
         // Generate a random integer between 1 and 10 using Random.Range
         int randomNumberOne = Random.Range(1, 10);
         int randomNumberTwo = Random.Range(1, 10);
         int randomNumberThree = Random.Range(1, 10);
         int randomNumberFour = Random.Range(1, 10);
-        //codeText = GetComponent<Text>();
-        
+        // int randomNumberOne = 5;
+        // int randomNumberTwo = 5;
+        // int randomNumberThree = 6;
+        // int randomNumberFour = 8;
+
+        // int scoreOne = 0;
+        // int scoreTwo = 0;
+        // int scoreThree = 0;
+        // int scoreFour = 0;
+
+    void ScoreSettlement(){
+        if (FindObjectAtPosition("Player", desiredPos4) == playerOne){
+            scoreTwo += 1;  //all other players +1 score
+            scoreThree += 1;
+            scoreFour += 1;
+            }
+            else if (FindObjectAtPosition("Player", desiredPos4) == playerTwo){
+                scoreOne += 1;
+                scoreThree += 1;
+                scoreFour += 1;
+            }
+            else if (FindObjectAtPosition("Player", desiredPos4) == playerThree){
+                scoreOne += 1;
+                scoreTwo += 1;
+                scoreFour += 1;
+            }
+            else if (FindObjectAtPosition("Player", desiredPos4) == playerFour){
+                scoreOne += 1;
+                scoreTwo += 1;
+                scoreThree += 1;
+            }
+            else{
+                
+            }
+        scoreTextOne.text = scoreOne.ToString();
+        scoreTextTwo.text = scoreTwo.ToString();
+        scoreTextThree.text = scoreThree.ToString();
+        scoreTextFour.text = scoreFour.ToString();
+    }
+
         // Convert the random number to a string, UI
         codeTextOne.text = randomNumberOne.ToString();
         codeTextTwo.text = randomNumberTwo.ToString();
         codeTextThree.text = randomNumberThree.ToString();
         codeTextFour.text = randomNumberFour.ToString();
 
-        if((randomNumberOne != randomNumberTwo) && (randomNumberOne != randomNumberThree) && (randomNumberOne != randomNumberFour)){
-            compareSize.Add(randomNumberOne);
-        }
-        if((randomNumberTwo != randomNumberOne) && (randomNumberTwo != randomNumberThree) && (randomNumberTwo != randomNumberFour)){
-            compareSize.Add(randomNumberTwo);
-        }
-        if((randomNumberThree != randomNumberOne) && (randomNumberThree != randomNumberTwo) && (randomNumberThree != randomNumberFour)){
-            compareSize.Add(randomNumberThree);
-        }
-        if((randomNumberFour != randomNumberOne) && (randomNumberFour != randomNumberTwo) && (randomNumberFour != randomNumberThree)){
-            compareSize.Add(randomNumberFour);
-        }
+        scoreTextOne.text = scoreOne.ToString();
+        scoreTextTwo.text = scoreTwo.ToString();
+        scoreTextThree.text = scoreThree.ToString();
+        scoreTextFour.text = scoreFour.ToString();
 
-        if (compareSize.Count > 0){
-            //compareSize.Sort(); // sorts list in ascending order
-            if (compareSize.Min() == randomNumberOne){
-            // move player1 to front
-            // Get the current position of the GameObject
-            Vector3 currentPosition = playerOne.transform.position;
+        playerOneTempPos = playerOne.transform.position;
+        playerTwoTempPos = playerTwo.transform.position;
+        playerThreeTempPos = playerThree.transform.position;
+        playerFourTempPos = playerFour.transform.position;
 
-            // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.5f, currentPosition.y, currentPosition.z);
-
-            // Move the GameObject to the new position
-            playerOne.transform.position = newPosition;
-            }  
-            if (compareSize.Min() == randomNumberTwo){
-
-            Vector3 currentPosition = playerTwo.transform.position;
-            // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.5f, currentPosition.y, currentPosition.z);
-
-            // Move the GameObject to the new position
-            playerTwo.transform.position = newPosition;
+        // 9 tie scenarios
+        if ((randomNumberOne==randomNumberTwo) && (randomNumberOne!=randomNumberThree) && (randomNumberOne!=randomNumberFour)){
+            for (int i = 0; i < 2; i++){
+                if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false) {
+                    if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) && IsPlayerAtLocation(desiredPos4, 0.5f)){
+                        randomBool = true;
+                        Debug.Log("entered randombool true");
+                    }
+                // move playerOne back by 1.5f
+                //Vector3 currentPosition1 = playerOne.transform.position;
+                if (randomBool == false){
+                        // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition1 = new Vector3(playerOneTempPos.x - 1.5f, playerOneTempPos.y, playerOneTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerOne.transform.position = newPosition1;
+                    //update playerOnePos
+                    playerOneTempPos = playerOne.transform.position;
+                }            
+                }
+                randomBool = false;
+                if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false) {
+                    if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) && IsPlayerAtLocation(desiredPos4, 0.5f)){
+                        randomBool = true;
+                        Debug.Log("entered randombool true");
+                    }
+                // move playerOne back by 1.5f
+                //Vector3 currentPosition1 = playerOne.transform.position;
+                if (randomBool == false){
+                        // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition2 = new Vector3(playerTwoTempPos.x - 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerTwo.transform.position = newPosition2;
+                    //update playerOnePos
+                    playerTwoTempPos = playerTwo.transform.position;
+                }   
+                }
+                randomBool = false;  
             }
-
-            if (compareSize.Min() == randomNumberThree){
-
-            Vector3 currentPosition = playerThree.transform.position;
-            // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.5f, currentPosition.y, currentPosition.z);
-
-            // Move the GameObject to the new position
-            playerThree.transform.position = newPosition;
-            }
-            if (compareSize.Min() == randomNumberFour){
-
-            Vector3 currentPosition = playerFour.transform.position;
-            // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.5f, currentPosition.y, currentPosition.z);
-
-            // Move the GameObject to the new position
-            playerFour.transform.position = newPosition;
-            }
-
-            compareSize.Clear(); // clear the list after each round
-        }
         
+         
+
+                if (randomNumberThree < randomNumberFour){
+                    playerThree.transform.position = desiredPos2;
+                    playerThreeTempPos = playerThree.transform.position;
+
+                    playerFour.transform.position = desiredPos1;
+                    playerFourTempPos = playerFour.transform.position;
+                }
+                if (randomNumberFour < randomNumberThree){
+                    playerThree.transform.position = desiredPos1;
+                    playerThreeTempPos = playerFour.transform.position;
+
+                    playerFour.transform.position = desiredPos2;
+                    playerFourTempPos = playerFour.transform.position;
+                }
+            ScoreSettlement();
+        }
+            else if ((randomNumberOne==randomNumberThree) && (randomNumberOne!=randomNumberTwo) && (randomNumberOne!=randomNumberFour)){
+                if (randomNumberTwo < randomNumberFour){
+                    playerTwo.transform.position = desiredPos2;
+                    playerTwoTempPos = playerTwo.transform.position;
+
+                    playerFour.transform.position = desiredPos1;
+                    playerFourTempPos = playerFour.transform.position;
+                }
+                if (randomNumberFour < randomNumberTwo){
+                    playerTwo.transform.position = desiredPos1;
+                    playerTwoTempPos = playerTwo.transform.position;
+
+                    playerFour.transform.position = desiredPos2;
+                    playerFourTempPos = playerFour.transform.position;
+                }
+                for (int i = 0; i < 2; i++){
+                    if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false){
+                        Debug.Log(ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f));
+                        if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) && IsPlayerAtLocation(desiredPos4, 0.1f)){
+                            randomBool = true;
+                        }
+                        if(randomBool == false){
+                                // Calculate the new position by adding the desired distance to the X coordinate
+                            Vector3 newPosition1 = new Vector3(playerOneTempPos.x - 1.5f, playerOneTempPos.y, playerOneTempPos.z);
+                            
+                            // Move the GameObject to the new position
+                            playerOne.transform.position = newPosition1;
+                            //update playerOnePos
+                            playerOneTempPos = playerOne.transform.position;
+                        }        
+                    }
+                    randomBool = false;
+                    if (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos4, 0.1f) == false){
+                        Debug.Log(ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f));
+                        if (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f) && IsPlayerAtLocation(desiredPos4, 0.1f)){
+                            randomBool = true;
+                        }
+                        if (randomBool == false){
+                                // Calculate the new position by adding the desired distance to the X coordinate
+                            Vector3 newPosition3 = new Vector3(playerThreeTempPos.x - 1.5f, playerThreeTempPos.y, playerThreeTempPos.z);
+                            
+                            // Move the GameObject to the new position
+                            playerThree.transform.position = newPosition3;
+                            //update playerOnePos
+                            playerThreeTempPos = playerThree.transform.position;
+                        }    
+               
+                
+                    }
+                    randomBool = false;
+                }
         
+             
+
+                ScoreSettlement();
+            }
+            else if ((randomNumberOne==randomNumberFour) && (randomNumberOne!=randomNumberThree) && (randomNumberOne!=randomNumberTwo)){
+                for (int i = 0; i < 2; i++){
+                    if ((ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition1 = new Vector3(playerOneTempPos.x - 1.5f, playerOneTempPos.y, playerOneTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerOne.transform.position = newPosition1;
+                    //update playerOnePos
+                    playerOneTempPos = playerOne.transform.position;
+                
+                    }
+                    if ((ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition4 = new Vector3(playerFourTempPos.x - 1.5f, playerFourTempPos.y, playerFourTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerFour.transform.position = newPosition4;
+                    //update playerOnePos
+                    playerFourTempPos = playerFour.transform.position;
+                
+                    }
+                }
+        
+               
+
+                if (randomNumberTwo < randomNumberThree){
+                    playerTwo.transform.position = desiredPos2;
+                    playerTwoTempPos = playerTwo.transform.position;
+
+                    playerThree.transform.position = desiredPos1;
+                    playerThreeTempPos = playerThree.transform.position;
+                }
+                if (randomNumberThree < randomNumberTwo){
+                    playerTwo.transform.position = desiredPos1;
+                    playerTwoTempPos = playerTwo.transform.position;
+
+                    playerThree.transform.position = desiredPos2;
+                    playerThreeTempPos = playerThree.transform.position;
+                }
+                ScoreSettlement();
+            }
+            else if ((randomNumberTwo==randomNumberThree) && (randomNumberTwo!=randomNumberOne) && (randomNumberTwo!=randomNumberFour)) {
+                for (int i = 0; i < 2; i++){
+                    if ((ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition2 = new Vector3(playerTwoTempPos.x - 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerTwo.transform.position = newPosition2;
+                    //update playerOnePos
+                    playerTwoTempPos = playerTwo.transform.position;
+                
+                    }
+                    if ((ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition3 = new Vector3(playerThreeTempPos.x - 1.5f, playerThreeTempPos.y, playerThreeTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerThree.transform.position = newPosition3;
+                    //update playerOnePos
+                    playerThreeTempPos = playerThree.transform.position;
+                
+                    }
+                }
+        
+
+                if (randomNumberOne < randomNumberFour){
+                    playerOne.transform.position = desiredPos2;
+                    playerOneTempPos = playerOne.transform.position;
+
+                    playerFour.transform.position = desiredPos1;
+                    playerFourTempPos = playerFour.transform.position;
+                }
+                if (randomNumberFour < randomNumberOne){
+                    playerOne.transform.position = desiredPos1;
+                    playerOneTempPos = playerOne.transform.position;
+
+                    playerFour.transform.position = desiredPos2;
+                    playerFourTempPos = playerFour.transform.position;
+                }
+                ScoreSettlement();
+            }
+            else if ((randomNumberTwo==randomNumberFour) && (randomNumberTwo!=randomNumberOne) && (randomNumberTwo!=randomNumberThree)){
+                for (int i = 0; i < 2; i++){
+                    if ((ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition2 = new Vector3(playerTwoTempPos.x - 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerTwo.transform.position = newPosition2;
+                    //update playerOnePos
+                    playerTwoTempPos = playerTwo.transform.position;
+                
+                    }
+                     
+                    if ((ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition4 = new Vector3(playerFourTempPos.x - 1.5f, playerFourTempPos.y, playerFourTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerFour.transform.position = newPosition4;
+                    //update playerOnePos
+                    playerFourTempPos = playerFour.transform.position;
+                
+                    }
+                }
+        
+             
+                if (randomNumberOne < randomNumberThree){
+                    playerOne.transform.position = desiredPos2;
+                    playerOneTempPos = playerOne.transform.position;
+
+                    playerThree.transform.position = desiredPos1;
+                    playerThreeTempPos = playerThree.transform.position;
+                }
+                if (randomNumberThree < randomNumberOne){
+                    playerOne.transform.position = desiredPos1;
+                    playerOneTempPos = playerOne.transform.position;
+
+                    playerThree.transform.position = desiredPos2;
+                    playerThreeTempPos = playerThree.transform.position;
+                }
+                ScoreSettlement();
+            }
+            else if ((randomNumberThree==randomNumberFour) && (randomNumberThree!=randomNumberOne) && (randomNumberThree!=randomNumberTwo)){
+                for (int i = 0; i < 2; i++){
+                    if ((ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition3 = new Vector3(playerThreeTempPos.x - 1.5f, playerThreeTempPos.y, playerThreeTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerThree.transform.position = newPosition3;
+                    //update playerOnePos
+                    playerThreeTempPos = playerThree.transform.position;
+                
+                    }
+                    if ((ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition4 = new Vector3(playerFourTempPos.x - 1.5f, playerFourTempPos.y, playerFourTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerFour.transform.position = newPosition4;
+                    //update playerOnePos
+                    playerFourTempPos = playerFour.transform.position;
+                
+                    }
+                }
+        
+           
+
+                if (randomNumberOne < randomNumberTwo){
+                    playerOne.transform.position = desiredPos2;
+                    playerOneTempPos = playerOne.transform.position;
+
+                    playerTwo.transform.position = desiredPos1;
+                    playerTwoTempPos = playerTwo.transform.position;
+                }
+                if (randomNumberTwo < randomNumberOne){
+                    playerOne.transform.position = desiredPos1;
+                    playerOneTempPos = playerOne.transform.position;
+
+                    playerTwo.transform.position = desiredPos2;
+                    playerTwoTempPos = playerTwo.transform.position;
+                }
+                ScoreSettlement();
+            }
+            else if ((randomNumberOne==randomNumberTwo) && (randomNumberOne==randomNumberThree)){
+                for (int i = 0; i < 3; i++){
+                    if ((ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition1 = new Vector3(playerOneTempPos.x - 1.5f, playerOneTempPos.y, playerOneTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerOne.transform.position = newPosition1;
+                    //update playerOnePos
+                    playerOneTempPos = playerOne.transform.position;
+                
+                    }
+                    if ((ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition2 = new Vector3(playerTwoTempPos.x - 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerTwo.transform.position = newPosition2;
+                    //update playerOnePos
+                    playerTwoTempPos = playerTwo.transform.position;
+                
+                    }
+
+                if ((ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition3 = new Vector3(playerThreeTempPos.x - 1.5f, playerThreeTempPos.y, playerThreeTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerThree.transform.position = newPosition3;
+                    //update playerOnePos
+                    playerThreeTempPos = playerThree.transform.position;
+                
+                    }
+                }
+            
+            playerFour.transform.position = desiredPos1;
+            playerFourTempPos = playerTwo.transform.position;
+            ScoreSettlement();
+            }
+            else if ((randomNumberOne==randomNumberTwo) && (randomNumberOne==randomNumberFour)){
+                for (int i = 0; i < 3; i++){
+                    if ((ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition1 = new Vector3(playerOneTempPos.x - 1.5f, playerOneTempPos.y, playerOneTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerOne.transform.position = newPosition1;
+                    //update playerOnePos
+                    playerOneTempPos = playerOne.transform.position;
+                
+                    }
+                    if ((ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition2 = new Vector3(playerTwoTempPos.x - 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerTwo.transform.position = newPosition2;
+                    //update playerOnePos
+                    playerTwoTempPos = playerTwo.transform.position;
+                
+                    }
+                    if ((ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos4, 0.1f) == false) && (IsPlayerAtLocation(desiredPos4, 0.5f) && (ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos3, 0.1f) == false))){
+                            
+                    // Calculate the new position by adding the desired distance to the X coordinate
+                    Vector3 newPosition4 = new Vector3(playerFourTempPos.x - 1.5f, playerFourTempPos.y, playerFourTempPos.z);
+                           
+                    // Move the GameObject to the new position
+                    playerFour.transform.position = newPosition4;
+                    //update playerOnePos
+                    playerFourTempPos = playerFour.transform.position;
+                
+                    }
+                }
+          
+                playerThree.transform.position = desiredPos1;
+                playerThreeTempPos = playerThree.transform.position;
+                ScoreSettlement();
+            }
+            else if ((randomNumberTwo==randomNumberThree) && (randomNumberTwo==randomNumberFour)){
+                for (int i = 0; i < 3; i++){
+                    if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false){
+                        if (IsPlayerAtLocation(desiredPos4, 0.5f) && ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f)){
+                            randomBool = true;
+                        }
+                    if(randomBool == false){
+                         // Calculate the new position by adding the desired distance to the X coordinate
+                        Vector3 newPosition2 = new Vector3(playerTwoTempPos.x - 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
+                           
+                        // Move the GameObject to the new position
+                        playerTwo.transform.position = newPosition2;
+                        //update playerOnePos
+                        playerTwoTempPos = playerTwo.transform.position;
+                    }        
+                   
+                
+                    }
+                    randomBool = false;
+                    if (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos4, 0.1f) == false){
+                        if (IsPlayerAtLocation(desiredPos4, 0.5f) && ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f)){
+                            randomBool = true;
+                        }
+                    if (randomBool == false){
+                           // Calculate the new position by adding the desired distance to the X coordinate
+                        Vector3 newPosition3 = new Vector3(playerThreeTempPos.x - 1.5f, playerThreeTempPos.y, playerThreeTempPos.z);
+                           
+                        // Move the GameObject to the new position
+                        playerThree.transform.position = newPosition3;
+                        //update playerOnePos
+                        playerThreeTempPos = playerThree.transform.position;
+                    } 
+                    randomBool = false;
+                
+                    }
+                    if (ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos4, 0.1f) == false){
+                        if (IsPlayerAtLocation(desiredPos4, 0.5f) && ArePositionsApproximatelyEqual(playerFourTempPos, desiredPos3, 0.1f)){
+                            randomBool = true;
+                        }
+                    if(randomBool == false){
+                           // Calculate the new position by adding the desired distance to the X coordinate
+                        Vector3 newPosition4 = new Vector3(playerFourTempPos.x - 1.5f, playerFourTempPos.y, playerFourTempPos.z);
+                           
+                        // Move the GameObject to the new position
+                        playerFour.transform.position = newPosition4;
+                        //update playerOnePos
+                        playerFourTempPos = playerFour.transform.position;
+                    }
+                    randomBool = false;
+                
+                    }
+                }
+                
+              
+            playerOne.transform.position = desiredPos1;
+            playerOneTempPos = playerOne.transform.position;
+            ScoreSettlement();
+            }
+            else if ((randomNumberOne != randomNumberTwo) && (randomNumberOne != randomNumberThree) && (randomNumberOne != randomNumberFour)){
+                List<int> numbers = new List<int> { randomNumberOne, randomNumberTwo, randomNumberThree, randomNumberFour };
+                int minNumber = numbers.Min();
+                if (minNumber == randomNumberOne){
+                    playerOne.transform.position = desiredPos4;
+                }
+                else if (minNumber == randomNumberTwo){
+                    playerTwo.transform.position = desiredPos4;
+                }
+                else if (minNumber == randomNumberThree){
+                    playerThree.transform.position = desiredPos4;
+                }
+                else if (minNumber == randomNumberFour){
+                    playerFour.transform.position = desiredPos4;
+                }
+                numbers.Remove(minNumber);
+
+                int minNumber1 = numbers.Min();
+                if (minNumber1 == randomNumberOne){
+                    playerOne.transform.position = desiredPos3;
+                }
+                else if (minNumber1 == randomNumberTwo){
+                    playerTwo.transform.position = desiredPos3;
+                }
+                else if (minNumber1 == randomNumberThree){
+                    playerThree.transform.position = desiredPos3;
+                }
+                else if (minNumber1 == randomNumberFour){
+                    playerFour.transform.position = desiredPos3;
+                }
+                numbers.Remove(minNumber1);
+
+                int minNumber2 = numbers.Min();
+                if (minNumber2 == randomNumberOne){
+                    playerOne.transform.position = desiredPos2;
+                }
+                else if (minNumber2 == randomNumberTwo){
+                    playerTwo.transform.position = desiredPos2;
+                }
+                else if (minNumber2 == randomNumberThree){
+                    playerThree.transform.position = desiredPos2;
+                }
+                else if (minNumber2 == randomNumberFour){
+                    playerFour.transform.position = desiredPos2;
+                }
+                numbers.Remove(minNumber2);
+
+                int minNumber3 = numbers.Min();
+                  if (minNumber3 == randomNumberOne){
+                    playerOne.transform.position = desiredPos1;
+                }
+                else if (minNumber3 == randomNumberTwo){
+                    playerTwo.transform.position = desiredPos1;
+                }
+                else if (minNumber3 == randomNumberThree){
+                    playerThree.transform.position = desiredPos1;
+                }
+                else if (minNumber3 == randomNumberFour){
+                    playerFour.transform.position = desiredPos1;
+                }
+                numbers.Remove(minNumber3);
+
+                ScoreSettlement();
+            }
+            // 1,2,3,4 tied
+            else{
+                ScoreSettlement();
+                //break;
+            }
+    }
+ 
+    
+    GameObject FindObjectAtPosition(string tag, Vector3 position)
+    {
+        
+        Collider[] colliders = Physics.OverlapSphere(position, checkRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag(tag))
+            {
+                return collider.gameObject;
+            }
+        }
+        return null;
     }
     
-
-
-    // Update is called once per frame
-    void Update()
+    bool IsPlayerAtLocation(Vector3 location, float radius)
     {
+        Collider[] colliders = Physics.OverlapSphere(location, radius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    bool ArePositionsApproximatelyEqual(Vector3 positionA, Vector3 positionB, float tolerance)
+    {   
+        float distance = Vector3.Distance(positionA, positionB);
+        return distance <= tolerance;
+    }
+    void Update(){
         if(Input.GetKeyDown(KeyCode.R)){
+            // assign player number to correct rng numbeer
+
             Start();
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1)){
             Debug.Log("Key 1 down registered by unity");
+            //GetObjectAtPosition(desiredPos1, "Player").transform.Translate(new Vector3(-1.5f, 0f, 0f));
             //transform.Translate(Vector3.up * Time.deltaTime, Space.World);
             //playerOne.transform.Translate(Vector3.right * Time.deltaTime, Space.World);
             //playerOne.transform.Translate(Vector3.right*100);
             // Calculate the target position to move the GameObject to the right
-
-            // Get the current position of the GameObject
+            // Vector3 currentPosition1 = GetObjectAtPosition(desiredPos1, "Player").transform.position;
+                          
+            // Vector3 newPosition1 = new Vector3(currentPosition1.x - 1.5f, currentPosition1.y, currentPosition1.z);
+            
+            // GetObjectAtPosition(desiredPos1, "Player").transform.position = newPosition1;
             Vector3 currentPosition = playerOne.transform.position;
 
             // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            Vector3 newPosition = new Vector3(currentPosition.x -1.5f, currentPosition.y, currentPosition.z);
 
             // Move the GameObject to the new position
             playerOne.transform.position = newPosition;
+            //playerThree.transform.position = desiredPos1;
         }
         if(Input.GetKeyDown(KeyCode.Alpha2)){
             Debug.Log("Key 2 down registered by unity");
@@ -143,7 +680,7 @@ public class PlayerBehavior : MonoBehaviour
             Vector3 currentPosition = playerTwo.transform.position;
 
             // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            Vector3 newPosition = new Vector3(currentPosition.x -1.5f, currentPosition.y, currentPosition.z);
 
             // Move the GameObject to the new position
             playerTwo.transform.position = newPosition;
@@ -154,7 +691,7 @@ public class PlayerBehavior : MonoBehaviour
             Vector3 currentPosition = playerThree.transform.position;
 
             // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            Vector3 newPosition = new Vector3(currentPosition.x -1.5f, currentPosition.y, currentPosition.z);
 
             // Move the GameObject to the new position
             playerThree.transform.position = newPosition;
@@ -165,10 +702,11 @@ public class PlayerBehavior : MonoBehaviour
             Vector3 currentPosition = playerFour.transform.position;
 
             // Calculate the new position by adding the desired distance to the X coordinate
-            Vector3 newPosition = new Vector3(currentPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            Vector3 newPosition = new Vector3(currentPosition.x -1.5f, currentPosition.y, currentPosition.z);
 
             // Move the GameObject to the new position
             playerFour.transform.position = newPosition;
         }
     }
+
 }
