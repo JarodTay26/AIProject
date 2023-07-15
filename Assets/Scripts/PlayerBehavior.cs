@@ -48,6 +48,12 @@ public class PlayerBehavior : MonoBehaviour
 
     private bool randomBool = false;
 
+    public int randomNumberOne;
+    public int randomNumberTwo;
+    public int randomNumberThree;
+    public int randomNumberFour;
+
+
 
     void Start(){
         codeTextOne.text = "0";
