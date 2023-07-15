@@ -7,14 +7,14 @@ public class AiBiggestToSmallest : MonoBehaviour
 {
     private const int maxCards = 9;
     private bool[] cardsPlayed = new bool[maxCards];
-    public void PlayCard(){
+    public int PlayCard(){
         for(int i = maxCards - 1; i > -1;--i){
             if(!cardsPlayed[i]){
-                gameObject.GetComponent<PlayerBehavior>().randomNumberThree = i + 1;
                 cardsPlayed[i] = true;
-                return;
+                return i + 1;
             }
         }
+        return 0;
     }
     void Start()
     {

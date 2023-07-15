@@ -5,7 +5,6 @@ using System;
 
 public class AiDecisionScript : MonoBehaviour
 {
-    PlayerBehavior gameData = null;
     private const int playerCount = 4;
     private const int maxNumberOfCards = 9;
     private float[] valueTable = new float[maxNumberOfCards];
@@ -78,7 +77,6 @@ public class AiDecisionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameData = gameObject.GetComponent<PlayerBehavior>();
         Array.Clear(cardTable, 0, cardTable.Length);
         CalculateCurrentValue();
         for(int i =0; i < maxNumberOfCards;++i){
@@ -92,7 +90,7 @@ public class AiDecisionScript : MonoBehaviour
     }
 
 
-    public void AIPlay(int cardPlayed1, int cardPlayed2, int cardPlayed3, int cardPlayed4)
+    public int PlayCard(int cardPlayed1, int cardPlayed2, int cardPlayed3, int cardPlayed4)
     {
         if ((cardPlayed1 != 0) && (cardPlayed2 != 0) && (cardPlayed3 != 0) && (cardPlayed4 != 0))
         {
@@ -122,7 +120,7 @@ public class AiDecisionScript : MonoBehaviour
         //Need to account for played cards
         if (lowestUnplayedCard == maxNumberOfCards)
         {
-            return;
+            return 0;
         }
         float optimalScore = currentValue[lowestUnplayedCard] - valueTable[lowestUnplayedCard];
         for (int i = lowestUnplayedCard + 1; i < maxNumberOfCards && currentValue[lowestUnplayedCard] != 1 && currentValue[lowestUnplayedCard] != 0; ++i)
@@ -148,17 +146,7 @@ public class AiDecisionScript : MonoBehaviour
             }
         }
         // Use optimal choice
-        gameData.randomNumberOne = optimalChoice + 1;
-        --currentNumberOfCards;
-        
-        //Debug.Log(randomNumberOne);
-        //gameData.randomNumberTwo = 9;
-        //gameData.randomNumberThree = 9;
-        gameData.randomNumberFour = 9;
-
-      
-        
-
-        
+        --currentNumberOfCards;  
+        return optimalChoice + 1; 
     }
 }

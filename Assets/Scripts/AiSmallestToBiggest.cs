@@ -8,14 +8,15 @@ public class AiSmallestToBiggest : MonoBehaviour
     private const int maxCards = 9;
     private bool[] cardsPlayed = new bool[maxCards];
     // Start is called before the first frame update
-    public void PlayCard(){
+    public int PlayCard(){
         for(int i = 0; i < maxCards;++i){
             if(!cardsPlayed[i]){
                 gameObject.GetComponent<PlayerBehavior>().randomNumberTwo = i + 1;
                 cardsPlayed[i] = true;
-                return;
+                return i + 1;
             }
         }
+        return 0;
     }
     void Start()
     {
