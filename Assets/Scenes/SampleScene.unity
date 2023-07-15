@@ -297,6 +297,8 @@ GameObject:
   - component: {fileID: 333074639}
   - component: {fileID: 333074643}
   - component: {fileID: 333074644}
+  - component: {fileID: 333074646}
+  - component: {fileID: 333074645}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -425,6 +427,10 @@ MonoBehaviour:
   randomNumberTwo: 0
   randomNumberThree: 0
   randomNumberFour: 0
+  randomPrevNumberOne: 0
+  randomPrevNumberTwo: 0
+  randomPrevNumberThree: 0
+  randomPrevNumberFour: 0
 --- !u!114 &333074644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +441,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c91d342cc1c25e48baa72d571a0fd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &333074645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333074638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9642c21e7fc2f5148bf5cdf9da84861d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &333074646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333074638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d4d90f02c531e428b07e4cd25bd807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &527532089

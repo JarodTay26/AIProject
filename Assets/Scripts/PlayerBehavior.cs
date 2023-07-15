@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-
-
-
 public class PlayerBehavior : MonoBehaviour
 {
     public GameObject playerOne;
@@ -39,9 +36,6 @@ public class PlayerBehavior : MonoBehaviour
 
     public Vector3 targetPosition = new Vector3(-2.155911f, 0.45f, -0.229504f);
 
-    //private Vector3 desiredPos5 = new Vector3(-3.655911f, 0.45f, -0.229504f);
-
-
     private Vector3 playerOneTempPos; 
     private Vector3 playerTwoTempPos; 
     private Vector3 playerThreeTempPos; 
@@ -59,9 +53,6 @@ public class PlayerBehavior : MonoBehaviour
     public int randomPrevNumberThree;
     public int randomPrevNumberFour;
 
-
-
-
     void Start(){
         
         codeTextOne.text = "0";
@@ -76,41 +67,20 @@ public class PlayerBehavior : MonoBehaviour
     }
     
     void GameLogic(){
-        //if ((randomNumberOne != 0) && (randomNumberTwo != 0) && (randomNumberThree != 0) && (randomNumberFour != 0)){
-            // store prev int selected
-            randomPrevNumberOne = randomNumberOne;
-            randomPrevNumberTwo = randomNumberTwo;
-            randomPrevNumberThree = randomNumberThree;
-            randomPrevNumberFour = randomNumberFour;
-            Debug.Log(randomPrevNumberOne);
-            Debug.Log(randomPrevNumberTwo);
-            Debug.Log(randomPrevNumberThree);
-            Debug.Log(randomPrevNumberFour);
-
-            
-        //}
-        
         //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
         
-        // Generate a random integer between 1 and 10 using Random.Range, 10 exclusive 1 inclusive
-        // randomNumberOne = Random.Range(1, 10);
-        // randomNumberTwo = Random.Range(1, 10);
-        // randomNumberThree = Random.Range(1, 10);
-        // randomNumberFour = Random.Range(1, 10);
+        // if ((randomNumberOne != 0) && (randomNumberTwo != 0) && (randomNumberThree != 0) && (randomNumberFour != 0)){
+        //     // store prev int selected
+        //     randomPrevNumberOne = randomNumberOne;
+        //     randomPrevNumberTwo = randomNumberTwo;
+        //     randomPrevNumberThree = randomNumberThree;
+        //     randomPrevNumberFour = randomNumberFour;
+        //     Debug.Log(randomPrevNumberOne);
+        //     Debug.Log(randomPrevNumberTwo);
+        //     Debug.Log(randomPrevNumberThree);
+        //     Debug.Log(randomPrevNumberFour);
+        // }
 
-        // private Vector3 playerOneTempPos; 
-        // private Vector3 playerTwoTempPos; 
-        // private Vector3 playerThreeTempPos; 
-        // private Vector3 playerFourTempPos;
-        // int randomNumberOne = 5;
-        // int randomNumberTwo = 3;
-        // int randomNumberThree = 5;
-        // int randomNumberFour = 3;
-
-        // int scoreOne = 0;
-        // int scoreTwo = 0;
-        // int scoreThree = 0;
-        // int scoreFour = 0;
 
         // Convert the random number to a string, UI
         codeTextOne.text = randomNumberOne.ToString();
@@ -118,25 +88,12 @@ public class PlayerBehavior : MonoBehaviour
         codeTextThree.text = randomNumberThree.ToString();
         codeTextFour.text = randomNumberFour.ToString();
 
-        // cards played in previous round
-        // randomPrevNumberOne = randomNumberOne;
-        // randomPrevNumberTwo = randomNumberTwo;
-        // randomPrevNumberOne = randomNumberThree;
-        // randomPrevNumberOne = randomNumberFour;
-        // Debug.Log(randomNumberOne);
-        // Debug.Log(randomNumberTwo);
-        // Debug.Log(randomNumberThree);
-        // Debug.Log(randomNumberFour);
-
-
         // get score played in prev round, except round1 bc theres no round 0
         
         scoreTextOne.text = scoreOne.ToString();
         scoreTextTwo.text = scoreTwo.ToString();
         scoreTextThree.text = scoreThree.ToString();
         scoreTextFour.text = scoreFour.ToString();
-        
-        
 
         playerOne.transform.position = desiredPos1;
         playerTwo.transform.position = desiredPos2;
@@ -331,8 +288,7 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 for (int i = 0; i < 2; i++){
                     if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false){
-                        //Debug.Log(ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f));
-                        //Debug.Log(CheckPlayerPosition());
+
                         if(ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) && CheckPlayerPosition()){
                             
                             randomBool = true;
@@ -367,10 +323,7 @@ public class PlayerBehavior : MonoBehaviour
                     randomBool = false;
                     }
                 }
-        
 
-                // make orange move 1.5f right
-                           
                 // Move the GameObject to the new position
                 playerTwo.transform.position = new Vector3(playerTwoTempPos.x + 1.5f, playerTwoTempPos.y, playerTwoTempPos.z);
                 //update playerOnePos
@@ -731,11 +684,7 @@ public class PlayerBehavior : MonoBehaviour
                 ScoreSettlement();
             }
             else if ((randomNumberOne == randomNumberFour) && (randomNumberTwo == randomNumberThree)){
-                //move player1 3.0f left
-                    // Move the GameObject to the new position
-                    // playerOne.transform.position = new Vector3(playerOneTempPos.x + 3.0f, playerOneTempPos.y, playerOneTempPos.z);
-                    // //update playerOnePos
-                    // playerOneTempPos = playerOne.transform.position;
+
                 ScoreSettlement();
             }
             // 1,2,3,4 tied
@@ -797,45 +746,17 @@ public class PlayerBehavior : MonoBehaviour
     }
     void Update(){
         if(Input.GetKeyDown(KeyCode.R)){
-            // assign player number to correct rng numbeer
-            // playerOneTempPos = new Vector3();
-            // playerTwoTempPos = new Vector3();
-            // playerThreeTempPos = new Vector3();
-            // playerFourTempPos = new Vector3();
-         
-            
-            GameLogic();
-            //gameObject.GetComponent<AiDecisionScript>().AIPlay();
-            gameObject.GetComponent<AiDecisionScript>().AIPlay(randomNumberOne, randomNumberTwo, randomNumberThree, randomNumberFour);
-            // Debug.Log(randomPrevNumberOne);
-            // Debug.Log(randomPrevNumberTwo);
-            // Debug.Log(randomPrevNumberThree);
-            // Debug.Log(randomPrevNumberFour);
-            // Debug.Log(scoreOne);
-            // Debug.Log(scoreTwo);
-            // Debug.Log(scoreThree);
-            // Debug.Log(scoreFour);
 
-            // playerOneTempPos = desiredPos1;
-            // playerTwoTempPos = desiredPos2;
-            // playerThreeTempPos = desiredPos3;
-            // playerFourTempPos = desiredPos4;
-           
-            
+            GameLogic();
+
+            gameObject.GetComponent<AiDecisionScript>().AIPlay(randomNumberOne, randomNumberTwo, randomNumberThree, randomNumberFour); // player1 & player4
+            gameObject.GetComponent<AiSmallestToBiggest>().PlayCard(); // player2
+            gameObject.GetComponent<AiBiggestToSmallest>().PlayCard(); // player3
+
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1)){
-            //Debug.Log("Key 1 down registered by unity");
-            //GetObjectAtPosition(desiredPos1, "Player").transform.Translate(new Vector3(-1.5f, 0f, 0f));
-            //transform.Translate(Vector3.up * Time.deltaTime, Space.World);
-            //playerOne.transform.Translate(Vector3.right * Time.deltaTime, Space.World);
-            //playerOne.transform.Translate(Vector3.right*100);
-            // Calculate the target position to move the GameObject to the right
-            // Vector3 currentPosition1 = GetObjectAtPosition(desiredPos1, "Player").transform.position;
-                          
-            // Vector3 newPosition1 = new Vector3(currentPosition1.x - 1.5f, currentPosition1.y, currentPosition1.z);
-            
-            // GetObjectAtPosition(desiredPos1, "Player").transform.position = newPosition1;
+
             Vector3 currentPosition = playerOne.transform.position;
 
             // Calculate the new position by adding the desired distance to the X coordinate
@@ -879,43 +800,7 @@ public class PlayerBehavior : MonoBehaviour
             playerFour.transform.position = newPosition;
         }
     }
-    // void ScoreSettlement(){
-    //     if (FindObjectAtPosition("Player", desiredPos4) == playerOne){
-    //         Debug.Log(playerOneTempPos);
-    //         Debug.Log("player1 ended up last");
-    //         scoreTwo += 1;  //all other players +1 score
-    //         scoreThree += 1;
-    //         scoreFour += 1;
-    //         }
-    //         else if (FindObjectAtPosition("Player", desiredPos4) == playerTwo){
-    //             Debug.Log(playerTwoTempPos);
-    //             Debug.Log("player2 ended up last");
-    //             scoreOne += 1;
-    //             scoreThree += 1;
-    //             scoreFour += 1;
-    //         }
-    //         else if (FindObjectAtPosition("Player", desiredPos4) == playerThree){
-    //             Debug.Log(playerThreeTempPos);
-    //             Debug.Log("player3 ended up last");
-    //             scoreOne += 1;
-    //             scoreTwo += 1;
-    //             scoreFour += 1;
-    //         }
-    //         else if (FindObjectAtPosition("Player", desiredPos4) == playerFour){
-    //             Debug.Log(playerFourTempPos);
-    //             Debug.Log("player4 ended up last");
-    //             scoreOne += 1;
-    //             scoreTwo += 1;
-    //             scoreThree += 1;
-    //         }
-    //         else{
-    //             //continue;
-    //         }
-    //     scoreTextOne.text = scoreOne.ToString();
-    //     scoreTextTwo.text = scoreTwo.ToString();
-    //     scoreTextThree.text = scoreThree.ToString();
-    //     scoreTextFour.text = scoreFour.ToString();
-    // }
+
     void ScoreSettlement(){
         if ((randomNumberOne != 0) ||(randomNumberTwo != 0) || (randomNumberThree != 0) || (randomNumberFour != 0)){
             if (ArePositionsApproximatelyEqual(playerOne.transform.position, desiredPos4, 0.25f)){
@@ -954,7 +839,5 @@ public class PlayerBehavior : MonoBehaviour
             scoreTextThree.text = scoreThree.ToString();
             scoreTextFour.text = scoreFour.ToString();
         }
-        
-        
     }
 }

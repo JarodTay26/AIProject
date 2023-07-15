@@ -72,7 +72,9 @@ public class AiDecisionScript : MonoBehaviour
         gameData = gameObject.GetComponent<PlayerBehavior>();
         Array.Clear(cardTable, 0, cardTable.Length);
         CalculateCurrentValue();
-        valueTable = currentValue;
+        for(int i =0; i < maxNumberOfCards;++i){
+            valueTable[i] = currentValue[i];
+        }
     }
 
     // Update is called once per frame
@@ -95,7 +97,6 @@ public class AiDecisionScript : MonoBehaviour
             cardTable[3,cardPlayed4] = true;
         }
         CalculateCurrentValue();
-
         int lowestUnplayedCard = maxNumberOfCards;
         for (int i = 0; i < maxNumberOfCards; ++i)
         {
@@ -137,14 +138,13 @@ public class AiDecisionScript : MonoBehaviour
                 optimalChoice = i;
             }
         }
-     
         // Use optimal choice
         gameData.randomNumberOne = optimalChoice + 1;
         --currentNumberOfCards;
         
         //Debug.Log(randomNumberOne);
-        gameData.randomNumberTwo = 9;
-        gameData.randomNumberThree = 9;
+        //gameData.randomNumberTwo = 9;
+        //gameData.randomNumberThree = 9;
         gameData.randomNumberFour = 9;
 
       

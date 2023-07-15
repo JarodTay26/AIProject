@@ -8,9 +8,10 @@ public class AiBiggestToSmallest : MonoBehaviour
     private const int maxCards = 9;
     private bool[] cardsPlayed = new bool[maxCards];
     public void PlayCard(){
-        for(int i = maxCards; i > -1;--i){
+        for(int i = maxCards - 1; i > -1;--i){
             if(!cardsPlayed[i]){
                 gameObject.GetComponent<PlayerBehavior>().randomNumberThree = i + 1;
+                cardsPlayed[i] = true;
                 return;
             }
         }
