@@ -10,7 +10,7 @@ public class AiBiggestToSmallest : MonoBehaviour
     public void PlayCard(){
         for(int i = maxCards; i > -1;--i){
             if(!cardsPlayed[i]){
-                gameObject.GetComponent<PlayerBehavior>().randomNumberTwo = i + 1;
+                gameObject.GetComponent<PlayerBehavior>().randomNumberThree = i + 1;
                 return;
             }
         }
