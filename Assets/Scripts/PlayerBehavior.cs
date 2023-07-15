@@ -31,6 +31,7 @@ public class PlayerBehavior : MonoBehaviour
     public static int scoreThree;
     public static int scoreFour;
 
+    
     private Vector3 desiredPos1 = new Vector3(2.455911f, 0.45f, -0.229504f);
     private Vector3 desiredPos2 = new Vector3(0.955911f, 0.45f, -0.229504f);
     private Vector3 desiredPos3 = new Vector3(-0.655911f, 0.45f, -0.229504f);
@@ -53,9 +54,16 @@ public class PlayerBehavior : MonoBehaviour
     public int randomNumberThree;
     public int randomNumberFour;
 
+    public int randomPrevNumberOne;
+    public int randomPrevNumberTwo;
+    public int randomPrevNumberThree;
+    public int randomPrevNumberFour;
+
+
 
 
     void Start(){
+        
         codeTextOne.text = "0";
         codeTextTwo.text = "0";
         codeTextThree.text = "0";
@@ -68,12 +76,27 @@ public class PlayerBehavior : MonoBehaviour
     }
     
     void GameLogic(){
+        //if ((randomNumberOne != 0) && (randomNumberTwo != 0) && (randomNumberThree != 0) && (randomNumberFour != 0)){
+            // store prev int selected
+            randomPrevNumberOne = randomNumberOne;
+            randomPrevNumberTwo = randomNumberTwo;
+            randomPrevNumberThree = randomNumberThree;
+            randomPrevNumberFour = randomNumberFour;
+            Debug.Log(randomPrevNumberOne);
+            Debug.Log(randomPrevNumberTwo);
+            Debug.Log(randomPrevNumberThree);
+            Debug.Log(randomPrevNumberFour);
+
+            
+        //}
+        
         //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
         
         // Generate a random integer between 1 and 10 using Random.Range, 10 exclusive 1 inclusive
-        randomNumberTwo = Random.Range(1, 10);
-        randomNumberThree = Random.Range(1, 10);
-        randomNumberFour = Random.Range(1, 10);
+        // randomNumberOne = Random.Range(1, 10);
+        // randomNumberTwo = Random.Range(1, 10);
+        // randomNumberThree = Random.Range(1, 10);
+        // randomNumberFour = Random.Range(1, 10);
 
         // private Vector3 playerOneTempPos; 
         // private Vector3 playerTwoTempPos; 
@@ -95,10 +118,25 @@ public class PlayerBehavior : MonoBehaviour
         codeTextThree.text = randomNumberThree.ToString();
         codeTextFour.text = randomNumberFour.ToString();
 
+        // cards played in previous round
+        // randomPrevNumberOne = randomNumberOne;
+        // randomPrevNumberTwo = randomNumberTwo;
+        // randomPrevNumberOne = randomNumberThree;
+        // randomPrevNumberOne = randomNumberFour;
+        // Debug.Log(randomNumberOne);
+        // Debug.Log(randomNumberTwo);
+        // Debug.Log(randomNumberThree);
+        // Debug.Log(randomNumberFour);
+
+
+        // get score played in prev round, except round1 bc theres no round 0
+        
         scoreTextOne.text = scoreOne.ToString();
         scoreTextTwo.text = scoreTwo.ToString();
         scoreTextThree.text = scoreThree.ToString();
         scoreTextFour.text = scoreFour.ToString();
+        
+        
 
         playerOne.transform.position = desiredPos1;
         playerTwo.transform.position = desiredPos2;
@@ -130,7 +168,7 @@ public class PlayerBehavior : MonoBehaviour
                 if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false) {
                     if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) && CheckPlayerPosition()){
                         randomBool = true;
-                        Debug.Log("entered randombool true");
+                        //Debug.Log("entered randombool true");
                     }
                 // move playerOne back by 1.5f
                 //Vector3 currentPosition1 = playerOne.transform.position;
@@ -148,7 +186,7 @@ public class PlayerBehavior : MonoBehaviour
                 if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false) {
                     if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) && CheckPlayerPosition()){
                         randomBool = true;
-                        Debug.Log("entered randombool true");
+                        //("entered randombool true");
                     }
                 // move playerOne back by 1.5f
                 //Vector3 currentPosition1 = playerOne.transform.position;
@@ -184,7 +222,7 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 for (int i = 0; i < 2; i++){
                     if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos4, 0.1f) == false){
-                        Debug.Log(ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f));
+                        //Debug.Log(ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f));
                         if (ArePositionsApproximatelyEqual(playerOneTempPos, desiredPos3, 0.1f) && CheckPlayerPosition()){
                             randomBool = true;
                         }
@@ -201,7 +239,7 @@ public class PlayerBehavior : MonoBehaviour
                     randomBool = false;
                     
                     if (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos4, 0.1f) == false){
-                        Debug.Log(ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f));
+                        //Debug.Log(ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f));
                         if (ArePositionsApproximatelyEqual(playerThreeTempPos, desiredPos3, 0.1f) && CheckPlayerPosition()){
                             randomBool = true;
                         }
@@ -293,8 +331,8 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 for (int i = 0; i < 2; i++){
                     if (ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos4, 0.1f) == false){
-                        Debug.Log(ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f));
-                        Debug.Log(CheckPlayerPosition());
+                        //Debug.Log(ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f));
+                        //Debug.Log(CheckPlayerPosition());
                         if(ArePositionsApproximatelyEqual(playerTwoTempPos, desiredPos3, 0.1f) && CheckPlayerPosition()){
                             
                             randomBool = true;
@@ -764,17 +802,30 @@ public class PlayerBehavior : MonoBehaviour
             // playerTwoTempPos = new Vector3();
             // playerThreeTempPos = new Vector3();
             // playerFourTempPos = new Vector3();
+         
             
             GameLogic();
+            //gameObject.GetComponent<AiDecisionScript>().AIPlay();
+            gameObject.GetComponent<AiDecisionScript>().AIPlay(randomNumberOne, randomNumberTwo, randomNumberThree, randomNumberFour);
+            // Debug.Log(randomPrevNumberOne);
+            // Debug.Log(randomPrevNumberTwo);
+            // Debug.Log(randomPrevNumberThree);
+            // Debug.Log(randomPrevNumberFour);
+            // Debug.Log(scoreOne);
+            // Debug.Log(scoreTwo);
+            // Debug.Log(scoreThree);
+            // Debug.Log(scoreFour);
+
             // playerOneTempPos = desiredPos1;
             // playerTwoTempPos = desiredPos2;
             // playerThreeTempPos = desiredPos3;
             // playerFourTempPos = desiredPos4;
+           
             
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1)){
-            Debug.Log("Key 1 down registered by unity");
+            //Debug.Log("Key 1 down registered by unity");
             //GetObjectAtPosition(desiredPos1, "Player").transform.Translate(new Vector3(-1.5f, 0f, 0f));
             //transform.Translate(Vector3.up * Time.deltaTime, Space.World);
             //playerOne.transform.Translate(Vector3.right * Time.deltaTime, Space.World);
@@ -795,7 +846,7 @@ public class PlayerBehavior : MonoBehaviour
             //playerThree.transform.position = desiredPos1;
         }
         if(Input.GetKeyDown(KeyCode.Alpha2)){
-            Debug.Log("Key 2 down registered by unity");
+            //Debug.Log("Key 2 down registered by unity");
             // Get the current position of the GameObject
             Vector3 currentPosition = playerTwo.transform.position;
 
@@ -806,7 +857,7 @@ public class PlayerBehavior : MonoBehaviour
             playerTwo.transform.position = newPosition;
         }
         if(Input.GetKeyDown(KeyCode.Alpha3)){
-            Debug.Log("Key 3 down registered by unity");
+            //Debug.Log("Key 3 down registered by unity");
             // Get the current position of the GameObject
             Vector3 currentPosition = playerThree.transform.position;
 
@@ -817,7 +868,7 @@ public class PlayerBehavior : MonoBehaviour
             playerThree.transform.position = newPosition;
         }
         if(Input.GetKeyDown(KeyCode.Alpha4)){
-            Debug.Log("Key 4 down registered by unity");
+            //Debug.Log("Key 4 down registered by unity");
             // Get the current position of the GameObject
             Vector3 currentPosition = playerFour.transform.position;
 
@@ -866,30 +917,31 @@ public class PlayerBehavior : MonoBehaviour
     //     scoreTextFour.text = scoreFour.ToString();
     // }
     void ScoreSettlement(){
-        if (ArePositionsApproximatelyEqual(playerOne.transform.position, desiredPos4, 0.25f)){
-            Debug.Log(playerOneTempPos);
-            Debug.Log("player1 ended up last");
+        if ((randomNumberOne != 0) ||(randomNumberTwo != 0) || (randomNumberThree != 0) || (randomNumberFour != 0)){
+            if (ArePositionsApproximatelyEqual(playerOne.transform.position, desiredPos4, 0.25f)){
+            //Debug.Log(playerOneTempPos);
+            //Debug.Log("player1 ended up last");
             scoreTwo += 1;  //all other players +1 score
             scoreThree += 1;
             scoreFour += 1;
             }
             else if (ArePositionsApproximatelyEqual(playerTwo.transform.position, desiredPos4, 0.25f)){
-                Debug.Log(playerTwoTempPos);
-                Debug.Log("player2 ended up last");
+                //Debug.Log(playerTwoTempPos);
+                //Debug.Log("player2 ended up last");
                 scoreOne += 1;
                 scoreThree += 1;
                 scoreFour += 1;
             }
             else if (ArePositionsApproximatelyEqual(playerThree.transform.position, desiredPos4, 0.25f)){
-                Debug.Log(playerThreeTempPos);
-                Debug.Log("player3 ended up last");
+                //Debug.Log(playerThreeTempPos);
+                //Debug.Log("player3 ended up last");
                 scoreOne += 1;
                 scoreTwo += 1;
                 scoreFour += 1;
             }
             else if (ArePositionsApproximatelyEqual(playerFour.transform.position, desiredPos4, 0.25f)){
-                Debug.Log(playerFourTempPos);
-                Debug.Log("player4 ended up last");
+                //Debug.Log(playerFourTempPos);
+                //Debug.Log("player4 ended up last");
                 scoreOne += 1;
                 scoreTwo += 1;
                 scoreThree += 1;
@@ -897,9 +949,12 @@ public class PlayerBehavior : MonoBehaviour
             else{
                 //continue;
             }
-        scoreTextOne.text = scoreOne.ToString();
-        scoreTextTwo.text = scoreTwo.ToString();
-        scoreTextThree.text = scoreThree.ToString();
-        scoreTextFour.text = scoreFour.ToString();
+            scoreTextOne.text = scoreOne.ToString();
+            scoreTextTwo.text = scoreTwo.ToString();
+            scoreTextThree.text = scoreThree.ToString();
+            scoreTextFour.text = scoreFour.ToString();
+        }
+        
+        
     }
 }
