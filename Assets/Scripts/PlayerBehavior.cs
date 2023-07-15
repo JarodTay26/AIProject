@@ -62,7 +62,7 @@ public class PlayerBehavior : MonoBehaviour
     void Start(){
         //create 4 players
         int a = 1;
-        for (Player player:Players)
+        foreach (Player player in Players)
         {
             player.cards_owned = { 1,2,3,4,5,6,7,8,9};
             player.card_played = 0;
@@ -92,6 +92,7 @@ public class PlayerBehavior : MonoBehaviour
 
     }
     void GameLogic(){
+
         List<Player> round_cards;
         foreach (Player player in Players)
         {
@@ -129,6 +130,13 @@ public class PlayerBehavior : MonoBehaviour
             while (player.rank <= sortedlist.Count)
             {
                 player.rank += sortedlist.Count;
+            }
+        }
+        foreach (Player player in Players)
+        {
+            if (player.rank != 4)
+            {
+                player.score++;
             }
         }
             //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
