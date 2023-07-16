@@ -10,7 +10,7 @@ public class PlayerBehavior : MonoBehaviour
     public class Player
     {
         public int card_played;
-        public List<int> cards_owned;
+        public List<int> cards_owned = new List<int>();
         public int rank;
         public int score;
 
@@ -57,22 +57,22 @@ public class PlayerBehavior : MonoBehaviour
         scoreTextTwo.text = "0";
         scoreTextThree.text = "0";
         scoreTextFour.text = "0";
-        desiredPos[0] = Vector3(2.455911f, 0.45f, -0.229504f);
+        desiredPos[0] = new Vector3(2.455911f, 0.45f, -0.229504f);
         for(int i = 1; i < desiredPos.Length;++i){
             desiredPos[i] = desiredPos[0];
             desiredPos[i].x -= 1.5f * i ;
         }
     }
-    void Input(){
+    void InputCardPlayed(){
         Players[0].card_played = 9;
-        Players[1].card_played = gameObject.GetComponen<AiDecisionScript>().PlayCard(Player[1].card_played,Player[0].card_played,Player[2].card_played,Player[3].card_played);
+        Players[1].card_played = gameObject.GetComponent<AiDecisionScript>().PlayCard(Players[1].card_played, Players[0].card_played, Players[2].card_played, Players[3].card_played);
         Players[1].cards_owned.Remove(Players[1].card_played);
-        Players[2].card_played = gameObject.GetComponen<AiSmallestToBiggest>().PlayCard();
+        Players[2].card_played = gameObject.GetComponent<AiSmallestToBiggest>().PlayCard();
         Players[2].cards_owned.Remove(Players[2].card_played);
-        Players[3].card_played = gameObject.GetComponen<AiBiggestToSmallest>().PlayCard();
+        Players[3].card_played = gameObject.GetComponent<AiBiggestToSmallest>().PlayCard();
         Players[3].cards_owned.Remove(Players[3].card_played);
     }
-    void Render(){
+    void RenderCardPlayed(){
         cardTextOne.text = Players[0].card_played.ToString();
         cardTextTwo.text = Players[1].card_played.ToString();
         cardTextThree.text = Players[2].card_played.ToString();
@@ -140,7 +140,7 @@ public class PlayerBehavior : MonoBehaviour
     }
     void GameLogic(){
 
-        List<Player> round_cards;
+        List<Player> round_cards = new List<Player>();
         foreach (Player player in Players)
         {
             int check = 0;
@@ -157,7 +157,7 @@ public class PlayerBehavior : MonoBehaviour
             }
             if (check == 0)
             {
-                round_cards.Add(player.card_played);
+                round_cards.Add(player);
             }
         }
         List<Player> sortedlist = round_cards.OrderBy(x => x.card_played).ToList();
@@ -868,9 +868,9 @@ public class PlayerBehavior : MonoBehaviour
     */
     void Update(){
         if(Input.GetKeyDown(KeyCode.R)){
-            Input();
+            InputCardPlayed();
             GameLogic();
-            Render();
+            RenderCardPlayed();
         }
         /*
         if(Input.GetKeyDown(KeyCode.Alpha1)){
