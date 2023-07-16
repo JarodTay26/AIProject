@@ -904,7 +904,7 @@ public class PlayerBehavior : MonoBehaviour
     }
     */
     void Update(){
-        if(Input.GetKeyDown(KeyCode.T)){
+        if(Input.GetKeyDown(KeyCode.T)&&round_count%9==0){
             safeAIUsed = !safeAIUsed;
         }
         if(Input.GetKeyDown(KeyCode.R)){
