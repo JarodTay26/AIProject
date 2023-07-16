@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AiDecisionScript : MonoBehaviour
+public class AiRiskyDecisionScript : MonoBehaviour
 {
     private const int playerCount = 4;
     private const int maxNumberOfCards = 9;
@@ -12,13 +12,27 @@ public class AiDecisionScript : MonoBehaviour
     private int currentNumberOfCards = maxNumberOfCards;
     private bool[,] cardTable = new bool[playerCount, maxNumberOfCards];
 
-    int GameScore(int p, int p2, int p3, int p4)
+    int GameScore(int p, int p2, int p3, int p4, int cr, int cr2, int cr3, int cr4)
     {
+        if(p == p2){
+            if(cr > cr2){
+                return 1;
+            }
+        }
+        if(p == p3){
+            if(cr > cr3){
+                return 1;
+            }
+        }
+        if(p == p4){
+            if(cr > cr4){
+                return 1;
+            }
+        }
         if(p == p2 || p == p3 || p == p4){
             return 0;
         }
-        if (p > p2 || p > p3 || p > p4)
-        {
+        if(p > p2 || p > p3 || p > p4){
             return 1;
         }
         if(p2 == p3 || p3 == p4 || p2 == p4){
@@ -26,7 +40,7 @@ public class AiDecisionScript : MonoBehaviour
         }
         return 0;
     }
-    void CalculateCurrentValue()
+    void CalculateCurrentValue(int cr, int cr2, int cr3, int cr4)
     {
         Array.Clear(currentValue, 0, currentValue.Length);
         for (int i = 0; i < maxNumberOfCards; ++i)
@@ -53,7 +67,7 @@ public class AiDecisionScript : MonoBehaviour
                         {
                             continue;
                         }
-                        currentValue[i] += GameScore(i, j, k, l);
+                        currentValue[i] += GameScore(i, j, k, l,cr,cr2,cr3,cr4);
                     }
                 }
             }
@@ -65,7 +79,7 @@ public class AiDecisionScript : MonoBehaviour
     {
         currentNumberOfCards = maxNumberOfCards;
         Array.Clear(cardTable, 0, cardTable.Length);
-        CalculateCurrentValue();
+        CalculateCurrentValue(0,0,0,0);
         for(int i =0; i < maxNumberOfCards;++i){
             valueTable[i] = currentValue[i];
         }
@@ -77,7 +91,7 @@ public class AiDecisionScript : MonoBehaviour
     }
 
 
-    public int PlayCard(int cardPlayed1, int cardPlayed2, int cardPlayed3, int cardPlayed4)
+    public int PlayCard(int cardPlayed1, int cardPlayed2, int cardPlayed3, int cardPlayed4, int currentRank1, int currentRank2, int currentRank3, int currentRank4)
     {
         if ((cardPlayed1 != 0) && (cardPlayed2 != 0) && (cardPlayed3 != 0) && (cardPlayed4 != 0))
         {
@@ -90,7 +104,7 @@ public class AiDecisionScript : MonoBehaviour
             cardTable[2,cardPlayed3] = true;
             cardTable[3,cardPlayed4] = true;
         }
-        CalculateCurrentValue();
+        CalculateCurrentValue(currentRank1,currentRank2,currentRank3,currentRank4);
         int lowestUnplayedCard = maxNumberOfCards;
         for (int i = 0; i < maxNumberOfCards; ++i)
         {
