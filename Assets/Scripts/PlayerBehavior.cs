@@ -41,7 +41,9 @@ public class PlayerBehavior : MonoBehaviour
         int a = 1;
         foreach (Player player in Players)
         {
-            player.cards_owned = new List<int>({1,2,3,4,5,6,7,8,9});
+            for (int i = 1; i < 10; ++i) {
+                player.cards_owned.Add(i);
+            }
             player.card_played = 0;
             player.rank = a;
             a++;
