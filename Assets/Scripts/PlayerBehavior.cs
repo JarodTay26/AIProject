@@ -15,7 +15,16 @@ public class PlayerBehavior : MonoBehaviour
         public int rank;
         public int score;
 
-        
+        public void Reset_cards()
+        {
+            cards_owned.Clear();
+            cards_owned = new List<int>();
+            for (int i = 1; i < 10; ++i)
+            {
+                cards_owned.Add(i);
+            }
+            card_played = 0;
+        }
     }
     public Player[] Players = new Player[4];
 
@@ -34,7 +43,7 @@ public class PlayerBehavior : MonoBehaviour
     public Text scoreTextTwo;
     public Text scoreTextThree;
     public Text scoreTextFour;
-    
+    public int round_count = 0;
     private Vector3[] desiredPos = new Vector3[4];
 
     void Start(){
@@ -147,7 +156,14 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
     void GameLogic(){
-
+        
+        if (round_count % 9 == 0)
+        {
+            foreach(Player player in Players)
+            {
+                player.Reset_cards();
+            }
+        }
         List<Player> round_cards = new List<Player>();
         foreach (Player player in Players)
         {
@@ -195,6 +211,7 @@ public class PlayerBehavior : MonoBehaviour
                 player.score++;
             }
         }
+        round_count++;
         /*
             //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
 
