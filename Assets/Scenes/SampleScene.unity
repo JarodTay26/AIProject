@@ -413,24 +413,14 @@ MonoBehaviour:
   playerTwo: {fileID: 1240152162}
   playerThree: {fileID: 1578343687}
   playerFour: {fileID: 2118786409}
-  codeTextOne: {fileID: 618142617}
-  codeTextTwo: {fileID: 43795031}
-  codeTextThree: {fileID: 2082329366}
-  codeTextFour: {fileID: 1222128366}
+  cardTextOne: {fileID: 618142617}
+  cardTextTwo: {fileID: 43795031}
+  cardTextThree: {fileID: 2082329366}
+  cardTextFour: {fileID: 1222128366}
   scoreTextOne: {fileID: 283400884}
   scoreTextTwo: {fileID: 1172005495}
   scoreTextThree: {fileID: 1899111996}
   scoreTextFour: {fileID: 1973925778}
-  checkRadius: 0.25
-  targetPosition: {x: -2.155911, y: 0.45, z: -0.229504}
-  randomNumberOne: 0
-  randomNumberTwo: 0
-  randomNumberThree: 0
-  randomNumberFour: 0
-  randomPrevNumberOne: 0
-  randomPrevNumberTwo: 0
-  randomPrevNumberThree: 0
-  randomPrevNumberFour: 0
 --- !u!114 &333074644
 MonoBehaviour:
   m_ObjectHideFlags: 0

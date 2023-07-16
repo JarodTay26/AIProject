@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -14,6 +15,7 @@ public class PlayerBehavior : MonoBehaviour
         public int rank;
         public int score;
 
+        
     }
     public Player[] Players = new Player[4];
 
@@ -37,8 +39,14 @@ public class PlayerBehavior : MonoBehaviour
 
     void Start(){
         //create 4 players
+
         Array.Clear(Players,0,Players.Length);
+
         int a = 1;
+        for (int i = 0; i < 4; ++i)
+        {
+            Players[i] = new Player();
+        }
         foreach (Player player in Players)
         {
             for (int i = 1; i < 10; ++i) {
@@ -161,6 +169,7 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
         List<Player> sortedlist = round_cards.OrderBy(x => x.card_played).ToList();
+        sortedlist.Reverse();
         int current_rank = 1;
         foreach (Player player in sortedlist)
         {
