@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    bool safeAIUsed = true;
     public class Player
     {
         public int card_played;
@@ -88,13 +89,20 @@ public class PlayerBehavior : MonoBehaviour
                 player.Reset_cards();
             }
         }
-        Players[0].card_played = gameObject.GetComponent<AiRiskyDecisionScript>().PlayCard(Players[0].card_played, Players[1].card_played, Players[2].card_played, Players[3].card_played,
-        Players[0].rank,Players[1].rank,Players[2].rank,Players[3].rank);
-        Players[0].cards_owned.Remove(Players[0].card_played);
+        // Players[0].card_played = gameObject.GetComponent<AiRiskyDecisionScript>().PlayCard(Players[0].card_played, Players[1].card_played, Players[2].card_played, Players[3].card_played,
+        // Players[0].rank,Players[1].rank,Players[2].rank,Players[3].rank);
+        // Players[0].cards_owned.Remove(Players[0].card_played);
         // Players[1].card_played = 9;
-        //Players[0].card_played = 9;
-        Players[1].card_played = gameObject.GetComponent<AiDecisionScript>().PlayCard(Players[1].card_played, Players[0].card_played, Players[2].card_played, Players[3].card_played);
-        Players[1].cards_owned.Remove(Players[1].card_played);
+        Players[0].card_played = 9;
+        if(safeAIUsed){
+            Players[1].card_played = gameObject.GetComponent<AiDecisionScript>().PlayCard(Players[1].card_played, Players[0].card_played, Players[2].card_played, Players[3].card_played);
+            Players[1].cards_owned.Remove(Players[1].card_played);
+        }
+        else{
+            Players[1].card_played = gameObject.GetComponent<AiRiskyDecisionScript>().PlayCard(Players[1].card_played, Players[0].card_played, Players[2].card_played, Players[3].card_played,
+            Players[1].rank,Players[0].rank,Players[2].rank,Players[3].rank);
+            Players[1].cards_owned.Remove(Players[1].card_played);
+        }
         Players[2].card_played = gameObject.GetComponent<AiSmallestToBiggest>().PlayCard();
         Players[2].cards_owned.Remove(Players[2].card_played);
         Players[3].card_played = gameObject.GetComponent<AiBiggestToSmallest>().PlayCard();
@@ -896,6 +904,9 @@ public class PlayerBehavior : MonoBehaviour
     }
     */
     void Update(){
+        if(Input.GetKeyDown(KeyCode.T)){
+            safeAIUsed = !safeAIUsed;
+        }
         if(Input.GetKeyDown(KeyCode.R)){
             InputCardPlayed();
             GameLogic();
