@@ -26,61 +26,42 @@ public class PlayerBehavior : MonoBehaviour
     public Text cardTextOne; // for number selection (1-9) and scores
     public Text cardTextTwo;
     public Text cardTextThree;
-    public Text codeTextFour;
+    public Text cardTextFour;
 
     public Text scoreTextOne; // for each players score
     public Text scoreTextTwo;
     public Text scoreTextThree;
     public Text scoreTextFour;
-
-    public float checkRadius = 0.25f;
     
-    private Vector3 desiredPos1 = new Vector3(2.455911f, 0.45f, -0.229504f);
-    private Vector3 desiredPos2 = new Vector3(0.955911f, 0.45f, -0.229504f);
-    private Vector3 desiredPos3 = new Vector3(-0.655911f, 0.45f, -0.229504f);
-    private Vector3 desiredPos4 = new Vector3(-2.155911f, 0.45f, -0.229504f);
-
-    public Vector3 targetPosition = new Vector3(-2.155911f, 0.45f, -0.229504f);
-
-    private Vector3 playerOneTempPos; 
-    private Vector3 playerTwoTempPos; 
-    private Vector3 playerThreeTempPos; 
-    private Vector3 playerFourTempPos;
-
-    private bool randomBool = false;
-
-    public int randomNumberOne;
-    public int randomNumberTwo;
-    public int randomNumberThree;
-    public int randomNumberFour;
-
-    public int randomPrevNumberOne;
-    public int randomPrevNumberTwo;
-    public int randomPrevNumberThree;
-    public int randomPrevNumberFour;
+    private Vector3[] desiredPos = new Vector3[4];
 
     void Start(){
         //create 4 players
+        Array.Clear(Players,0,Players.Length);
         int a = 1;
-        for (Player player:Players)
+        for each(Player player in Players)
         {
             player.cards_owned = { 1,2,3,4,5,6,7,8,9};
             player.card_played = 0;
             player.rank = a;
             a++;
         }
-        codeTextOne.text = "0";
-        codeTextTwo.text = "0";
-        codeTextThree.text = "0";
-        codeTextFour.text = "0";
+        cardTextOne.text = "0";
+        cardTextTwo.text = "0";
+        cardTextThree.text = "0";
+        cardTextFour.text = "0";
 
         scoreTextOne.text = "0";
         scoreTextTwo.text = "0";
         scoreTextThree.text = "0";
         scoreTextFour.text = "0";
-        Array.Clear(Players,0,Players.Length);
-    }
-    void InputCardPlayed(){
+        desiredPos[0] = Vector3(2.455911f, 0.45f, -0.229504f);
+        for(int i = 1; i < desiredPos.Length;++i){
+            desiredPos[i] = desiredPos[0];
+            desiredPos[i].x -= 1.5f * i ;
+        }
+    void Input()){
+        Players[0].card_played = 9;
         Players[1].card_played = gameObject.GetComponen<AiDecisionScript>().PlayCard(Player[1].card_played,Player[0].card_played,Player[2].card_played,Player[3].card_played);
         Players[1].cards_owned.Remove(Players[1].card_played);
         Players[2].card_played = gameObject.GetComponen<AiSmallestToBiggest>().PlayCard();
@@ -88,8 +69,71 @@ public class PlayerBehavior : MonoBehaviour
         Players[3].card_played = gameObject.GetComponen<AiBiggestToSmallest>().PlayCard();
         Players[3].cards_owned.Remove(Players[3].card_played);
     }
-    void RenderCardPlayed(){
-
+    void Render(){
+        cardTextOne.text = Players[0].card_played.ToString();
+        cardTextTwo.text = Players[1].card_played.ToString();
+        cardTextThree.text = Players[2].card_played.ToString();
+        cardTextFour.text = Players[3].card_played.ToString();
+        scoreTextOne.text = Players[0].score.ToString();
+        scoreTextTwo.text = Players[1].score.ToString();
+        scoreTextThree.text = Players[2].score.ToString();
+        scoreTextFour.text = Players[3].score.ToString();
+        switch(Players[0].rank){
+            case 1:
+                playerOne.transform.position = desiredPos[0]
+                break;
+            case 2:
+                playerOne.transform.position = desiredPos[1]
+                break;
+            case 3:
+                playerOne.transform.position = desiredPos[2]
+                break;
+            case 4:
+                playerOne.transform.position = desiredPos[3]
+                break;
+        }
+        switch(Players[1].rank){
+            case 1:
+                playerTwo.transform.position = desiredPos[0]
+                break;
+            case 2:
+                playerTwo.transform.position = desiredPos[1]
+                break;
+            case 3:
+                playerTwo.transform.position = desiredPos[2]
+                break;
+            case 4:
+                playerTwo.transform.position = desiredPos[3]
+                break;
+        }
+        switch(Players[2].rank){
+            case 1:
+                playerThree.transform.position = desiredPos[0]
+                break;
+            case 2:
+                playerThree.transform.position = desiredPos[1]
+                break;
+            case 3:
+                playerThree.transform.position = desiredPos[2]
+                break;
+            case 4:
+                playerThree.transform.position = desiredPos[3]
+                break;
+        }
+        switch(Players[3].rank){
+            case 1:
+                playerFour.transform.position = desiredPos[0]
+                break;
+            case 2:
+                playerFour.transform.position = desiredPos[1]
+                break;
+            case 3:
+                playerFour.transform.position = desiredPos[2]
+                break;
+            case 4:
+                playerFour.transform.position = desiredPos[3]
+                break;
+        }
     }
     void GameLogic(){
         List<Player> round_cards;
@@ -131,6 +175,7 @@ public class PlayerBehavior : MonoBehaviour
                 player.rank += sortedlist.Count;
             }
         }
+        /*
             //Debug.Log(IsPlayerAtLocation(desiredPos5, 0.1f));
 
             // if ((randomNumberOne != 0) && (randomNumberTwo != 0) && (randomNumberThree != 0) && (randomNumberFour != 0)){
@@ -755,9 +800,10 @@ public class PlayerBehavior : MonoBehaviour
             else{
                 ScoreSettlement();
                 //break;
-            }
+            }*/
     }
-
+    
+/*
     GameObject FindObjectAtPosition(string tag, Vector3 position)
     {
         
@@ -808,17 +854,14 @@ public class PlayerBehavior : MonoBehaviour
         float distance = Vector3.Distance(positionA, positionB);
         return distance <= tolerance;
     }
+    */
     void Update(){
         if(Input.GetKeyDown(KeyCode.R)){
-
+            Input();
             GameLogic();
-
-            gameObject.GetComponent<AiDecisionScript>().AIPlay(randomNumberOne, randomNumberTwo, randomNumberThree, randomNumberFour); // player1 & player4
-            gameObject.GetComponent<AiSmallestToBiggest>().PlayCard(); // player2
-            gameObject.GetComponent<AiBiggestToSmallest>().PlayCard(); // player3
-
+            Render();
         }
-
+        /*
         if(Input.GetKeyDown(KeyCode.Alpha1)){
 
             Vector3 currentPosition = playerOne.transform.position;
@@ -862,9 +905,9 @@ public class PlayerBehavior : MonoBehaviour
 
             // Move the GameObject to the new position
             playerFour.transform.position = newPosition;
-        }
+        }*/
     }
-
+    /*
     void ScoreSettlement(){
         if ((randomNumberOne != 0) ||(randomNumberTwo != 0) || (randomNumberThree != 0) || (randomNumberFour != 0)){
             if (ArePositionsApproximatelyEqual(playerOne.transform.position, desiredPos4, 0.25f)){
@@ -904,4 +947,5 @@ public class PlayerBehavior : MonoBehaviour
             scoreTextFour.text = scoreFour.ToString();
         }
     }
+    */
 }
