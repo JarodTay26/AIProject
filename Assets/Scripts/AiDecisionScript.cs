@@ -77,6 +77,7 @@ public class AiDecisionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentNumberOfCards = maxNumberOfCards;
         Array.Clear(cardTable, 0, cardTable.Length);
         CalculateCurrentValue();
         for(int i =0; i < maxNumberOfCards;++i){
@@ -118,10 +119,6 @@ public class AiDecisionScript : MonoBehaviour
         //Lowest score for aggressive AI.
         //Highest score for passive AI
         //Need to account for played cards
-        if (lowestUnplayedCard == maxNumberOfCards)
-        {
-            return 0;
-        }
         float optimalScore = currentValue[lowestUnplayedCard] - valueTable[lowestUnplayedCard];
         for (int i = lowestUnplayedCard + 1; i < maxNumberOfCards && currentValue[lowestUnplayedCard] != 1 && currentValue[lowestUnplayedCard] != 0; ++i)
         {
@@ -146,7 +143,10 @@ public class AiDecisionScript : MonoBehaviour
             }
         }
         // Use optimal choice
-        --currentNumberOfCards;  
+        --currentNumberOfCards;
+        if(currentNumberOfCards == 0){
+            Start();
+        }  
         return optimalChoice + 1; 
     }
 }

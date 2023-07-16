@@ -12,6 +12,9 @@ public class AiSmallestToBiggest : MonoBehaviour
         for(int i = 0; i < maxCards;++i){
             if(!cardsPlayed[i]){
                 cardsPlayed[i] = true;
+                if(i == 8){
+                    Start();
+                }
                 return i + 1;
             }
         }

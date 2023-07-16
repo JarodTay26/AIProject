@@ -81,6 +81,13 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
     void InputCardPlayed(){
+        if (round_count % 9 == 0)
+        {
+            foreach(Player player in Players)
+            {
+                player.Reset_cards();
+            }
+        }
         Players[0].card_played = 9;
         Players[1].card_played = gameObject.GetComponent<AiDecisionScript>().PlayCard(Players[1].card_played, Players[0].card_played, Players[2].card_played, Players[3].card_played);
         Players[1].cards_owned.Remove(Players[1].card_played);
@@ -156,14 +163,6 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
     void GameLogic(){
-        
-        if (round_count % 9 == 0)
-        {
-            foreach(Player player in Players)
-            {
-                player.Reset_cards();
-            }
-        }
         List<Player> round_cards = new List<Player>();
         foreach (Player player in Players)
         {
