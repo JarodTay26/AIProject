@@ -35,6 +35,7 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject playerThree;
     public GameObject playerFour;
 
+    public List<GameObject> PlayerPosition = new List<GameObject>();
     public Text cardTextOne; // for number selection (1-9) and scores
     public Text cardTextTwo;
     public Text cardTextThree;
@@ -75,10 +76,9 @@ public class PlayerBehavior : MonoBehaviour
         scoreTextTwo.text = "0";
         scoreTextThree.text = "0";
         scoreTextFour.text = "0";
-        desiredPos[0] = new Vector3(2.455911f, 0.45f, -0.229504f);
-        for(int i = 1; i < desiredPos.Length;++i){
-            desiredPos[i] = desiredPos[0];
-            desiredPos[i].x -= 1.5f * i ;
+        //desiredPos[0] = new Vector3(2.455911f, 0.45f, -0.229504f);
+        for(int i = 0; i < desiredPos.Length;++i){
+            desiredPos[i] = PlayerPosition[i].transform.position;
         }
     }
     void InputCardPlayed(int playerCard){
