@@ -168,6 +168,7 @@ public class PlayerBehavior : MonoBehaviour
     }
     void GameLogic(){
         List<Player> round_cards = new List<Player>();
+        List<Player> tied = new List<Player>();
         foreach (Player player in Players)
         {
             int check = 0;
@@ -186,9 +187,14 @@ public class PlayerBehavior : MonoBehaviour
             {
                 round_cards.Add(player);
             }
+            else
+            {
+                tied.Add(player);
+            }
         }
         List<Player> sortedlist = round_cards.OrderBy(x => x.card_played).ToList();
         sortedlist.Reverse();
+        List<Player> sortedtied = tied.OrderBy(x => x.rank).ToList();
         int current_rank = 1;
         foreach (Player player in sortedlist)
         {
@@ -196,16 +202,10 @@ public class PlayerBehavior : MonoBehaviour
             current_rank++;
 
         }
-        foreach (Player player in Players)
+        foreach (Player player in sortedtied)
         {
-            if (sortedlist.Contains(player))
-            {
-                continue;
-            }
-            while (player.rank <= sortedlist.Count)
-            {
-                player.rank += sortedlist.Count;
-            }
+            player.rank = current_rank;
+            current_rank++;
         }
         foreach (Player player in Players)
         {
