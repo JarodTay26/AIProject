@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,7 +41,7 @@ public class PlayerBehavior : MonoBehaviour
         int a = 1;
         foreach (Player player in Players)
         {
-            player.cards_owned = { 1,2,3,4,5,6,7,8,9};
+            player.cards_owned = new List<int>({1,2,3,4,5,6,7,8,9});
             player.card_played = 0;
             player.rank = a;
             a++;
@@ -60,7 +60,8 @@ public class PlayerBehavior : MonoBehaviour
             desiredPos[i] = desiredPos[0];
             desiredPos[i].x -= 1.5f * i ;
         }
-    void Input()){
+    }
+    void Input(){
         Players[0].card_played = 9;
         Players[1].card_played = gameObject.GetComponen<AiDecisionScript>().PlayCard(Player[1].card_played,Player[0].card_played,Player[2].card_played,Player[3].card_played);
         Players[1].cards_owned.Remove(Players[1].card_played);
@@ -80,58 +81,58 @@ public class PlayerBehavior : MonoBehaviour
         scoreTextFour.text = Players[3].score.ToString();
         switch(Players[0].rank){
             case 1:
-                playerOne.transform.position = desiredPos[0]
+                playerOne.transform.position = desiredPos[0];
                 break;
             case 2:
-                playerOne.transform.position = desiredPos[1]
+                playerOne.transform.position = desiredPos[1];
                 break;
             case 3:
-                playerOne.transform.position = desiredPos[2]
+                playerOne.transform.position = desiredPos[2];
                 break;
             case 4:
-                playerOne.transform.position = desiredPos[3]
+                playerOne.transform.position = desiredPos[3];
                 break;
         }
         switch(Players[1].rank){
             case 1:
-                playerTwo.transform.position = desiredPos[0]
+                playerTwo.transform.position = desiredPos[0];
                 break;
             case 2:
-                playerTwo.transform.position = desiredPos[1]
+                playerTwo.transform.position = desiredPos[1];
                 break;
             case 3:
-                playerTwo.transform.position = desiredPos[2]
+                playerTwo.transform.position = desiredPos[2];
                 break;
             case 4:
-                playerTwo.transform.position = desiredPos[3]
+                playerTwo.transform.position = desiredPos[3];
                 break;
         }
         switch(Players[2].rank){
             case 1:
-                playerThree.transform.position = desiredPos[0]
+                playerThree.transform.position = desiredPos[0];
                 break;
             case 2:
-                playerThree.transform.position = desiredPos[1]
+                playerThree.transform.position = desiredPos[1];
                 break;
             case 3:
-                playerThree.transform.position = desiredPos[2]
+                playerThree.transform.position = desiredPos[2];
                 break;
             case 4:
-                playerThree.transform.position = desiredPos[3]
+                playerThree.transform.position = desiredPos[3];
                 break;
         }
         switch(Players[3].rank){
             case 1:
-                playerFour.transform.position = desiredPos[0]
+                playerFour.transform.position = desiredPos[0];
                 break;
             case 2:
-                playerFour.transform.position = desiredPos[1]
+                playerFour.transform.position = desiredPos[1];
                 break;
             case 3:
-                playerFour.transform.position = desiredPos[2]
+                playerFour.transform.position = desiredPos[2];
                 break;
             case 4:
-                playerFour.transform.position = desiredPos[3]
+                playerFour.transform.position = desiredPos[3];
                 break;
         }
     }
